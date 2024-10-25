@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventsAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241022214422_secondMigration")]
-    partial class secondMigration
+    [Migration("20241025185038_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,10 +36,7 @@ namespace EventsAPI.Migrations
                     b.Property<DateOnly>("DATE")
                         .HasColumnType("date");
 
-                    b.Property<int>("EVENT_TYPEID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("EVENT_TYPE_ID")
+                    b.Property<int>("EventType")
                         .HasColumnType("integer");
 
                     b.Property<TimeOnly>("TIME")
@@ -47,9 +44,9 @@ namespace EventsAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EVENT_TYPEID");
+                    b.HasIndex("EventType");
 
-                    b.ToTable("Event", "Events");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("EventsAPI.Models.EventType", b =>
@@ -72,7 +69,7 @@ namespace EventsAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EventType", "Events");
+                    b.ToTable("EventTypes");
                 });
 
             modelBuilder.Entity("EventsAPI.Models.EventUser", b =>
@@ -96,7 +93,7 @@ namespace EventsAPI.Migrations
                     b.HasIndex("USER_ID", "EVENT_ID")
                         .IsUnique();
 
-                    b.ToTable("EventUser", "Events");
+                    b.ToTable("EventUsers");
                 });
 
             modelBuilder.Entity("EventsAPI.Models.User", b =>
@@ -127,14 +124,14 @@ namespace EventsAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("User", "Events");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EventsAPI.Models.Event", b =>
                 {
                     b.HasOne("EventsAPI.Models.EventType", "EVENT_TYPE")
-                        .WithMany()
-                        .HasForeignKey("EVENT_TYPEID")
+                        .WithMany("EVENTS")
+                        .HasForeignKey("EventType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -158,6 +155,11 @@ namespace EventsAPI.Migrations
                     b.Navigation("EVENT");
 
                     b.Navigation("USER");
+                });
+
+            modelBuilder.Entity("EventsAPI.Models.EventType", b =>
+                {
+                    b.Navigation("EVENTS");
                 });
 #pragma warning restore 612, 618
         }

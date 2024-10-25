@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.Extensions.Hosting;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventsAPI.Models
 {
-    [Table("EventType", Schema = "Events")]
     public class EventType
     {
         public int ID { get; set; }
@@ -10,5 +10,6 @@ namespace EventsAPI.Models
         public required string NAME { get; set; }
         public int CAPACITY { get; set; }
         public bool ARCHIVE { get; set; }
+        public ICollection<Event> EVENTS { get; set; }
     }
 }

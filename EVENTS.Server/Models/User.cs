@@ -3,7 +3,6 @@ using System.Data;
 
 namespace EventsAPI.Models
 {
-    [Table("User", Schema = "Events")]
     public class User
     {
         public int ID { get; set; }

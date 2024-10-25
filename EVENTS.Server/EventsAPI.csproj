@@ -37,8 +37,8 @@
 
   <ItemGroup>
     <Folder Include="DTOs\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
